@@ -2,3 +2,12 @@ node_modules/
 dist/
 shots/
 /.manus-webdev/preview-identity.json
+# Assets restored from assets.lock.json
+/assets/models/exosuit-boss-animated.glb
+/assets/models/operator-animated.glb
+/assets/models/robot-dog.glb
+/assets/models/white-robot-animated.glb
+/assets/models/wolf-merc-animated.glb
+/assets/share/favicon-256.png
+/assets/share/loading-bg.jpg
+/assets/share/og-1200.png

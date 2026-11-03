@@ -1,6 +1,72 @@
 {
   "version": 2,
-  "groups": {},
+  "groups": {
+    "models": {
+      "name": "Models",
+      "order": 10
+    },
+    "share": {
+      "name": "Share",
+      "order": 20
+    }
+  },
   "bundles": {},
-  "assets": {}
+  "assets": {
+    "assets/models/exosuit-boss-animated.glb": {
+      "path": "/manus-storage/game/sha256/40444fa09afc3c65256a859cdd6f39b1b4ff3b7c04e2474e7cd0746e2901e800.glb",
+      "sha256": "sha256:40444fa09afc3c65256a859cdd6f39b1b4ff3b7c04e2474e7cd0746e2901e800",
+      "size": 4763592,
+      "assetType": "model",
+      "groupId": "models"
+    },
+    "assets/models/operator-animated.glb": {
+      "path": "/manus-storage/game/sha256/b75985dde613d71a5efd9a6a7665cf253cc87c6a79221199d5a13c07a00d3a83.glb",
+      "sha256": "sha256:b75985dde613d71a5efd9a6a7665cf253cc87c6a79221199d5a13c07a00d3a83",
+      "size": 4511320,
+      "assetType": "model",
+      "groupId": "models"
+    },
+    "assets/models/robot-dog.glb": {
+      "path": "/manus-storage/game/sha256/12cb060a86b7b3d33fa7fe9245b477f4094487c513e815e9240cd4e5d8aaecf9.glb",
+      "sha256": "sha256:12cb060a86b7b3d33fa7fe9245b477f4094487c513e815e9240cd4e5d8aaecf9",
+      "size": 4152504,
+      "assetType": "model",
+      "groupId": "models"
+    },
+    "assets/models/white-robot-animated.glb": {
+      "path": "/manus-storage/game/sha256/ca219597124c4d14fc45ca72ce02e53a0e25b0ceda7054a7d04c9b385a694eb5.glb",
+      "sha256": "sha256:ca219597124c4d14fc45ca72ce02e53a0e25b0ceda7054a7d04c9b385a694eb5",
+      "size": 4338592,
+      "assetType": "model",
+      "groupId": "models"
+    },
+    "assets/models/wolf-merc-animated.glb": {
+      "path": "/manus-storage/game/sha256/797359161c8ae71705030999b8b150bd84793f9a19a290788d9386354eb5cb9e.glb",
+      "sha256": "sha256:797359161c8ae71705030999b8b150bd84793f9a19a290788d9386354eb5cb9e",
+      "size": 5581228,
+      "assetType": "model",
+      "groupId": "models"
+    },
+    "assets/share/favicon-256.png": {
+      "path": "/manus-storage/game/sha256/0dcdd74277252530a8ad634f39635cd12c4e94da912897890bb959bdccca889d.png",
+      "sha256": "sha256:0dcdd74277252530a8ad634f39635cd12c4e94da912897890bb959bdccca889d",
+      "size": 46727,
+      "assetType": "image",
+      "groupId": "share"
+    },
+    "assets/share/loading-bg.jpg": {
+      "path": "/manus-storage/game/sha256/870396533932c84b01e283281b9e0c91b806a2f011acbd9a4dc4c93ce7f063f1.jpg",
+      "sha256": "sha256:870396533932c84b01e283281b9e0c91b806a2f011acbd9a4dc4c93ce7f063f1",
+      "size": 618460,
+      "assetType": "image",
+      "groupId": "share"
+    },
+    "assets/share/og-1200.png": {
+      "path": "/manus-storage/game/sha256/52e1632d03b76f294fcc2b7a24b91dde5957eb1f23749ea2f509183e14271334.png",
+      "sha256": "sha256:52e1632d03b76f294fcc2b7a24b91dde5957eb1f23749ea2f509183e14271334",
+      "size": 1455297,
+      "assetType": "image",
+      "groupId": "share"
+    }
+  }
 }

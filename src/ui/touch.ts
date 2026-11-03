@@ -2,7 +2,7 @@ import type { Input } from '../engine/input'
 
 /**
  * On-screen touch controls: a floating stick on the left half, drag-to-look on the right half,
- * and JUMP / DASH buttons. Enabled automatically on the first touch.
+ * and on-screen combat buttons. Enabled automatically on the first touch.
  */
 export class TouchControls {
   private stickId: number | null = null
@@ -27,19 +27,25 @@ export class TouchControls {
     }, { capture: true })
 
     const canvas = document.querySelector<HTMLCanvasElement>('#game')!
-    canvas.addEventListener('pointerdown', e => {
+    const begin = (e: PointerEvent) => {
       if (e.pointerType !== 'touch' || !this.active()) return
+      const target = e.target as HTMLElement
+      if (target.closest('[data-touch]')) return
+      if (target !== canvas && !target.closest('.touch-stick') && !target.closest('.touch-look')) return
+      try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId) } catch { /* window listeners still handle uncaptured pointers */ }
       if (e.clientX < window.innerWidth * 0.45 && this.stickId === null) {
         this.stickId = e.pointerId
         this.origin = { x: e.clientX, y: e.clientY }
-        this.stick.style.left = `${e.clientX}px`
-        this.stick.style.top = `${e.clientY}px`
+        this.stick.style.left = `${e.clientX - radius}px`
+        this.stick.style.top = `${e.clientY - radius}px`
         this.stick.classList.add('is-active')
       } else if (this.lookId === null) {
         this.lookId = e.pointerId
         this.last = { x: e.clientX, y: e.clientY }
       }
-    })
+    }
+    root.addEventListener('pointerdown', begin)
+    canvas.addEventListener('pointerdown', begin)
     window.addEventListener('pointermove', e => {
       if (e.pointerId === this.stickId) {
         let dx = e.clientX - this.origin.x
@@ -61,6 +67,7 @@ export class TouchControls {
         this.stickId = null
         this.knob.style.transform = ''
         this.stick.classList.remove('is-active')
+        this.stick.style.left = ''; this.stick.style.top = ''
         this.input.setTouchMove(0, 0)
       }
       if (e.pointerId === this.lookId) this.lookId = null

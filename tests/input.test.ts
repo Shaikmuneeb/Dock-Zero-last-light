@@ -51,11 +51,17 @@ describe('controller input', () => {
     })
   }
 
-  it('recognizes each physical dash press even when another dash binding is held', () => {
+  it('recognizes the FPS fire, optic, quick-switch and Overdrive bindings once per press', () => {
     const p = pads[0]!
-    button(p, 5, true); input.update(); expect(input.consume('dash')).toBe(true)
-    button(p, 2, true); input.update(); expect(input.consume('dash')).toBe(true)
-    input.update(); expect(input.consume('dash')).toBe(false); expect(input.held('dash')).toBe(true)
+    for (const index of [7, 6, 5, 3]) button(p, index, true)
+    input.update()
+    for (const action of ['fire', 'aim', 'weaponNext', 'overdrive'] as const) {
+      expect(input.consume(action)).toBe(true)
+      expect(input.consume(action)).toBe(false)
+    }
+    input.update()
+    expect(input.consume('fire')).toBe(false)
+    expect(input.held('fire')).toBe(true)
   })
   it('clears previous pad buttons after disconnect so reconnect presses work', () => {
     button(pads[0]!, 0, true); input.update(); expect(input.consume('confirm')).toBe(true)
@@ -66,7 +72,7 @@ describe('controller input', () => {
   })
 
   it('keeps standard pause, confirm, back and sprint bindings', () => {
-    for (const b of [0, 1, 4, 9]) button(pads[0]!, b, true)
+    for (const b of [0, 1, 9, 10]) button(pads[0]!, b, true)
     input.update()
     for (const action of ['pause', 'confirm', 'back'] as const) {
       expect(input.consume(action)).toBe(true); expect(input.consume(action)).toBe(false)

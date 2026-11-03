@@ -94,7 +94,7 @@ export class Player {
     if (jumpReady) this.dashTime = 0
 
     if (intent.dashPressed && this.dashCooldown <= 0 && !jumpReady) {
-      tuning.activate('dash')
+      tuning.activate('run')
       const dir = wishLen > 0.01 ? wish : new THREE.Vector3(-Math.sin(this.facing), 0, -Math.cos(this.facing))
       this.facing = Math.atan2(-dir.x, -dir.z)
       this.velocity.set(dir.x * P.dashSpeed, Math.max(this.velocity.y, 0), dir.z * P.dashSpeed)
@@ -116,7 +116,7 @@ export class Player {
       this.velocity.z = horizontal.z
 
       if (jumpReady) {
-        tuning.activate('jump')
+        tuning.activate('run')
         this.velocity.y = P.jumpSpeed
         this.jumping = true
         this.jumpBuffer = 0

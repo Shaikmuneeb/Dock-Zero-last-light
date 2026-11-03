@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "title": "Dock Zero: Last Light",
+  "description": "Hold the line through eight escalating waves in a rain-swept container port, or enter an offline six-bot free-for-all.",
+  "defaultCaptions": {
+    "x": "Dock Zero: Last Light. Eight waves. One operator. The harbor is still hostile.",
+    "facebook": "A tactical operator is the last signal in a storm-lit harbor terminal. Survive the escalating waves and face the exoskeleton siege, or take on six combat bots in offline free-for-all.",
+    "reddit": "Dock Zero: Last Light — an offline FPS set in a cinematic container terminal. Eight survival waves, a three-phase boss, or six-bot free-for-all.",
+    "discord": "Dock Zero: Last Light \u2014 a rainy harbor terminal, eight survival waves, a three-phase exoskeleton boss, and an offline six-bot free-for-all."
+  },
+  "assets": {
+    "og": "assets/share/og-1200.png",
+    "favicon": "assets/share/favicon-256.png"
+  }
+}
