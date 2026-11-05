@@ -43,6 +43,7 @@ async function boot(): Promise<void> {
   let ffaAttempt = 0
   let audioUnlocked = false
   let activeTrack: MusicMode | null = null
+  let pointerLockWasHeld = false
 
   const playTrack = (mode: MusicMode): void => {
     if (!audioUnlocked || activeTrack === mode) return
@@ -82,7 +83,7 @@ async function boot(): Promise<void> {
   ui = new FpsUI(root, {
     start: mode => { void beginMatch(mode) },
     retryAssets: () => { void retryInitialAssets() },
-    resume: () => { game.resume(); input.lockPointer() },
+    resume: () => { window.setTimeout(() => game.resume(), 0) },
     restart: () => { void beginMatch(lastMatch) },
     quit: () => { ffaLoading = false; ffaAttempt++; game.toTitle() },
     pause: () => game.pause(),
@@ -104,10 +105,13 @@ async function boot(): Promise<void> {
   window.addEventListener('manus-auth-change', event => showAccount(event.detail))
 
   const applySettings = (quality: Quality, sensitivity: number, musicVolume: number, sfxVolume: number, muted: boolean): void => {
+    const previous = save.data
     save.update({ quality, sensitivity, musicVolume, sfxVolume, muted })
     input.sensitivity = save.data.sensitivity
-    renderer.applyQuality(save.data.quality)
-    audio.setVolumes(save.data.musicVolume, save.data.sfxVolume, save.data.muted)
+    if (save.data.quality !== previous.quality) renderer.applyQuality(save.data.quality)
+    if (save.data.musicVolume !== previous.musicVolume || save.data.sfxVolume !== previous.sfxVolume || save.data.muted !== previous.muted) {
+      audio.setVolumes(save.data.musicVolume, save.data.sfxVolume, save.data.muted)
+    }
   }
 
   game = new FpsGame(renderer, input, {
@@ -116,7 +120,6 @@ async function boot(): Promise<void> {
       if (mode === 'playing') {
         audio.startWorld()
         audio.muteWorld(false)
-        if (input.method === 'keyboard') input.lockPointer()
         reconcileTrack()
       } else if (mode === 'paused' || mode === 'ended' || mode === 'title') {
         audio.muteWorld(true)
@@ -145,7 +148,10 @@ async function boot(): Promise<void> {
   })
   canvas.addEventListener('click', () => { if (game.mode === 'playing') input.lockPointer() })
   document.addEventListener('pointerlockchange', () => {
-    if (!document.pointerLockElement && game.mode === 'playing' && input.method === 'keyboard') game.pause()
+    if (document.pointerLockElement === canvas) { pointerLockWasHeld = true; return }
+    const lostAnAcquiredLock = pointerLockWasHeld
+    pointerLockWasHeld = false
+    if (lostAnAcquiredLock && game.mode === 'playing' && input.method === 'keyboard') game.pause()
   })
   document.addEventListener('visibilitychange', () => {
     if (document.hidden && game.mode === 'playing') game.pause()
@@ -211,12 +217,12 @@ async function boot(): Promise<void> {
       if (input.consume('pause')) {
         if (ui.settingsOpen) ui.closeSettings()
         else if (game.mode === 'playing') game.pause()
-        else if (game.mode === 'paused') { game.resume(); input.lockPointer() }
+        else if (game.mode === 'paused') game.resume()
         else cancelFfaLoad()
       }
       if (input.consume('back')) {
         if (ui.settingsOpen) ui.closeSettings()
-        else if (game.mode === 'paused') { game.resume(); input.lockPointer() }
+        else if (game.mode === 'paused') game.resume()
         else if (game.mode === 'ended') game.toTitle()
         else cancelFfaLoad()
       }
@@ -233,7 +239,7 @@ async function boot(): Promise<void> {
     },
     step: (dt: number) => { if (game.mode === 'playing') game.step(dt) },
     render: (alpha: number, seconds: number) => {
-      game.render(alpha, seconds)
+      if (game.mode !== 'paused') game.render(alpha, seconds)
       ui.update(game.hudState())
       reconcileTrack()
       input.endFrame()

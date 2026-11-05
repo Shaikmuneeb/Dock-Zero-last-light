@@ -29,6 +29,7 @@ export class Renderer {
   private composer?: EffectComposer
   private bloom?: UnrealBloomPass
   private preset: Preset
+  private currentQuality?: Quality
   private scene?: THREE.Scene
   private camera?: THREE.PerspectiveCamera
 
@@ -48,6 +49,8 @@ export class Renderer {
   }
 
   applyQuality(quality: Quality): void {
+    if (this.currentQuality === quality) return
+    this.currentQuality = quality
     this.preset = QUALITY_PRESETS[quality]
     this.gl.shadowMap.enabled = this.preset.shadows
     this.gl.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.preset.pixelRatio))

@@ -196,7 +196,7 @@ export class FpsGame {
   }
 
   private assetIntegrationSafe(): boolean {
-    if (document.hidden) return false
+    if (document.hidden || this.mode === 'paused' || this.mode === 'intermission') return false
     return this.mode !== 'playing' || (this.enemies.filter(e => e.alive).length < 5 && this.projectiles.length < 5 && this.fx.length < 48 && this.pressureFrames < 3)
   }
 
