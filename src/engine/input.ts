@@ -89,8 +89,7 @@ export class Input {
   }
 
   lockPointer(): void {
-    const touchDevice = navigator.maxTouchPoints > 0 || matchMedia('(pointer: coarse)').matches
-    if (!touchDevice && this.method !== 'touch' && document.pointerLockElement !== this.canvas) {
+    if (this.method !== 'touch' && document.pointerLockElement !== this.canvas) {
       try { void this.canvas.requestPointerLock?.()?.catch?.(() => undefined) } catch { /* keyboard/gamepad can play without pointer lock */ }
     }
   }

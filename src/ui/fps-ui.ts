@@ -52,8 +52,7 @@ export class FpsUI {
         const muted = !!root.querySelector<HTMLInputElement>('[data-setting="muted"]')?.checked
         this.actions.settings({ quality: quality ?? 'high', sensitivity, musicVolume, sfxVolume, muted })
         this.screens.get('settings')?.classList.remove('is-active')
-      }
-      else if (action === 'settings-close') this.screens.get('settings')?.classList.remove('is-active')
+      } else if (action === 'settings-close') this.screens.get('settings')?.classList.remove('is-active')
     }
     root.addEventListener('click', click)
     this.events.push(() => root.removeEventListener('click', click))

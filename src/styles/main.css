@@ -21,7 +21,6 @@ button { cursor: pointer; }
 #ui { position: fixed; inset: 0; z-index: 5; pointer-events: none; }
 .screen { position: absolute; inset: 0; display: none; overflow: hidden; }
 .screen.is-active { display: flex; }
-.boot-screen,.title-screen { pointer-events: auto; }
 .eyebrow { color: var(--sand); font-size: 10px; letter-spacing: .22em; font-weight: 700; text-transform: uppercase; }
 
 /* Loading / title treatment */
